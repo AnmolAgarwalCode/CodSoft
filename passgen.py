@@ -1,23 +1,23 @@
 import random
 import string
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox as msg
 
 def generate_password():
     length = int(length_entry.get())
 
     if length <= 0:
-        messagebox.showerror("Error", "Password length should be greater than 0.")
+        msg.showerror("Oops!", "Please enter a valid password length (greater than 0).")
         return
     
     characters = string.ascii_letters + string.digits + string.punctuation
     characters = ''.join(random.sample(characters, len(characters))) 
 
-    password = random.choice(string.ascii_lowercase) + \
-               random.choice(string.ascii_uppercase) + \
-               random.choice(string.digits) + \
-               random.choice(string.punctuation) + \
-               ''.join(random.choice(characters) for _ in range(length - 4))
+    password = (random.choice(string.ascii_lowercase) +
+                random.choice(string.ascii_uppercase) +
+                random.choice(string.digits) +
+                random.choice(string.punctuation) +
+                ''.join(random.choice(characters) for _ in range(length - 4)))
 
     password = ''.join(random.sample(password, len(password)))  
 
@@ -28,12 +28,11 @@ def generate_password():
 def accept_password():
     username = username_entry.get()
     password = password_entry.get()
-    messagebox.showinfo("Accepted", f"Username: {username}\nPassword: {password}")
+    msg.showinfo("Welcome!", f"Hello {username}! Your password has been generated.\n\nUsername: {username}\nPassword: {password}")
 
 root = tk.Tk()
-root.title('Password Generator')
+root.title('Secure Password Generator')
 
-# Title Label
 title_label = tk.Label(root, text='Password Generator', font=('Helvetica', 20, 'bold'), fg='blue')
 title_label.pack(pady=20)
 
@@ -57,7 +56,7 @@ generate_button.pack(pady=10)
 accept_button = tk.Button(root, text='Accept', command=accept_password, font=('Helvetica', 12))
 accept_button.pack(pady=5)
 
-reject_button = tk.Button(root, text='Reject', command=root.quit, font=('Helvetica', 12))
+reject_button = tk.Button(root, text='Create My Own Password', command=root.quit, font=('Helvetica', 12))
 reject_button.pack(pady=5)
 
 root.mainloop()
